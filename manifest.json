@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "auto-topics",
+  "description": "Create github topics based on the package.json",
+  "version": "0.1",
+  "page_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "http://www.github.com/*", "http://github.com/*",
+    "https://www.github.com/*", "https://github.com/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*/*"],
+      "css": ["topics.css"],
+      "js": ["topics.js"]
+    }
+  ]
+}
