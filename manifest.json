@@ -13,10 +13,6 @@
     "http://www.github.com/*", "http://github.com/*",
     "https://www.github.com/*", "https://github.com/*"
   ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": true
-  },
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
