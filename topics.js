@@ -1,19 +1,16 @@
 (function () {
   const createTopic = (keyword) => {
     const $li = document.createElement('li');
-    const $text = document.createTextNode(keyword);
-    const $button = document.createElement('button');
     $li.className = "topic-tag-action f6 float-left js-tag-input-tag";
+    const $button = document.createElement('button');
     $button.className = "delete-topic-button f5 no-underline ml-2 js-remove";
-    $button.setAttribute('tabIndex', '-1');
-    $button.innerHTML = '×';
-    $input = document.createElement("input");
+    $button.tabIndex = -1;
+    $button.textContent = "×";
+    const $input = document.createElement("input");
     $input.name = "repo_topics[]"
     $input.value = keyword;
     $input.hidden = true;
-    $li.appendChild($text);
-    $li.appendChild($button);
-    $li.appendChild($input);
+    $li.append(keyword, $button, $input);
     return $li;
   }
   const handleSyncClicked = (jsonPath, evt) => {
