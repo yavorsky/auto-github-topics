@@ -29,7 +29,7 @@
           $formUl = document.querySelector("#repo-topics-edit-form .js-tag-input-selected-tags");
           if (!$formUl) return;
 
-          const formValues = Array.from($formUl.querySelectorAll('input')).map(item => item.value);
+          const formValues = Array.from($formUl.querySelectorAll('input'), item => item.value);
 
           clearInterval(interval);
 
