@@ -32,11 +32,10 @@
           const formValues = Array.from($formUl.querySelectorAll('input'), item => item.value);
 
           clearInterval(interval);
+          
+          const topics = keywords.filter(kw => !formValues.includes(kw)).map(createTopic);
 
-          keywords.forEach(keyword => {
-            if (formValues.includes(keyword)) return;
-            $formUl.appendChild(createTopic(keyword));
-          });
+          $formUl.append(...topics);
 
           // $form.submit();
         }
