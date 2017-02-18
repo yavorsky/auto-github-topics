@@ -1,48 +1,40 @@
 (function () {
   const createTopic = (keyword) => {
-    const $li = document.createElement('li');
+    const $li = document.createElement("li");
     $li.className = "topic-tag-action f6 float-left js-tag-input-tag";
     const $button = document.createElement('button');
     $button.className = "delete-topic-button f5 no-underline ml-2 js-remove";
     $button.tabIndex = -1;
     $button.textContent = "×";
     const $input = document.createElement("input");
-    $input.name = "repo_topics[]"
+    $input.name = "repo_topics[]";
     $input.value = keyword;
     $input.hidden = true;
     $li.append(keyword, $button, $input);
     return $li;
-  }
+  };
   const handleSyncClicked = (jsonPath, evt) => {
     evt.preventDefault();
     jsonPath = jsonPath.replace("github", "raw.githubusercontent").replace("/blob", "");
-    fetch(jsonPath).then(d => {
-      d.json().then(data => {
-        const {keywords} = data;
+    fetch(jsonPath).then(r => r.json()).then(({keywords}) => {
+      document.querySelector(".btn-link.js-repo-topics-form-toggle.js-details-target").click();
+      if (!keywords || !keywords.length) return;
 
-        document.querySelector(".btn-link.js-repo-topics-form-toggle.js-details-target").click();
-        if (!keywords || !keywords.length) return;
+      const check = () => {
+        const $formUl = document.querySelector("#repo-topics-edit-form .js-tag-input-selected-tags");
+        if (!$formUl) return;
 
-        let interval;
+        const formValues = Array.from($formUl.querySelectorAll("input"), input => input.value);
+        const topics = keywords.filter(kw => !formValues.includes(kw)).map(createTopic);
+        $formUl.append(...topics);
 
-        const check = () => {
-          $formUl = document.querySelector("#repo-topics-edit-form .js-tag-input-selected-tags");
-          if (!$formUl) return;
+        clearInterval(interval);
+        // $form.submit();
+      };
 
-          const formValues = Array.from($formUl.querySelectorAll('input'), item => item.value);
-
-          clearInterval(interval);
-          
-          const topics = keywords.filter(kw => !formValues.includes(kw)).map(createTopic);
-
-          $formUl.append(...topics);
-
-          // $form.submit();
-        }
-        interval = setInterval(check, 1000)
-      })
-    })
-  }
+      const interval = setInterval(check, 1000)
+    });
+  };
 
   const onStateChange = ($topics, $addTopics, $jsonFile) => {
     if (!$topics) {
@@ -61,8 +53,8 @@
       const $sync = document.createElement("button");
       $sync.id = "topics-sync";
       $sync.className = "btn-link bth-sync";
-      $sync.innerHTML = "Fetch from package.json";
-      $topics.appendChild($sync);
+      $sync.textContent = "Fetch from package.json";
+      $topics.append($sync);
       $sync.addEventListener("click", handleSyncClicked.bind(null, $jsonFile.href));
     }
   }
