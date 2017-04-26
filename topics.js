@@ -21,7 +21,7 @@
       if (!keywords || !keywords.length) return;
 
       const check = () => {
-        const $formUl = document.querySelector("#repo-topics-edit-form .js-tag-input-selected-tags");
+        const $formUl = document.querySelector(".js-tag-input-selected-tags");
         if (!$formUl) return;
 
         const formValues = Array.from($formUl.querySelectorAll("input"), input => input.value);
