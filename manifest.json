@@ -3,7 +3,7 @@
 
   "name": "auto-topics",
   "description": "Create github topics based on the package.json",
-  "version": "0.1",
+  "version": "0.2",
   "page_action": {
     "default_icon": "icon.png"
   },
